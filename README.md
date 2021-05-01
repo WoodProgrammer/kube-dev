@@ -8,6 +8,8 @@
 This cluster is provisioning via kubeadm and scripts are generating by terraform under module directory.
 Storage class and Ingress requiremetns cloud-manager assigned as `AWS`.
 
+`ami_id` added as constant to prevent possible changes of AMI ids by region (`ubuntu focal 20.04`)
+
 ## Password Creds
 
 I've used `htpasswd` to provide credentials of basic http-authentication for monitoring stack;
