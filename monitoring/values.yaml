@@ -1,0 +1,35 @@
+prometheus:
+  ingress:
+    enabled: true
+    hostDomain: abc.xip.ip
+    pathType: Prefix
+    paths:
+      - "/prometheus"
+    annotations:
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: monitoring_passwd
+      nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - foo'
+  prometheusSpec:
+    externalUrl: http://*/prometheus
+    routePrefix : prometheus/
+    shards: null
+    resources:
+      requests:
+        cpu: 500m
+      limits:
+        cpu: "1"
+alertmanager:
+  enabled: true
+  ingress:
+    enabled: true
+    pathType: Prefix
+    hostDomain: abc.xip.ip
+    paths:
+      - "/alertmanager"
+    annotations:
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: monitoring_passwd
+      nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - foo'
+  alertmanagerSpec:
+    externalUrl: http://*/alertmanager
+    routePrefix : alertmanager/

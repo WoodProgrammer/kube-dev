@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kube-prometheus
+    meta.helm.sh/release-namespace: monitoring
+    prometheus-operator-validated: "true"
+  generation: 1
+  labels:
+    app: kube-prometheus-stack
+    release: kube-prometheus
+  name: kube-prometheus-kube-prome-container-memory
+  namespace: monitoring
+spec:
+  groups:
+  - name: container-memory-rules
+    rules:
+    - alert: ContainerMemoryUsage
+      expr: (sum(container_memory_working_set_bytes) BY (name) / sum(container_spec_memory_limit_bytes > 0) BY (name) * 100) > 10
+      labels:
+        severity: warning
